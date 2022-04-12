@@ -20,6 +20,13 @@ class CommentController extends Controller
         return view("comments.index", ["comments"=>$comments]);
     }
 
+
+    public function apiIndex()
+    {
+        $comments = Comment::all();
+        return $comments;
+    }
+
     /**
      * Show the form for creating a new resource.
      *
