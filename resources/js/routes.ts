@@ -1,6 +1,6 @@
 import React from "react";
 import { SecondPage } from "./components/SecondPage";
-import { WelcomePage } from "./components/WelcomePage";
+import { MainPage } from "./components/MainPage";
 
 interface IRoutes {
     component: React.ComponentType<any>;
@@ -9,7 +9,7 @@ interface IRoutes {
 
 export const publicRoutes = [
     {
-        component: WelcomePage,
+        component: MainPage,
         path: "/",
     },
     {

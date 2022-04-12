@@ -19,17 +19,6 @@ export interface IUser {
 }
 
 const App = () => {
-    const [users, setUsers] = useState<IUser[]>([
-        {
-            name: "Bijaya",
-            age: 25,
-        },
-        {
-            name: "Ram",
-            age: 25,
-        },
-    ]);
-
     return (
         <AppRoot>
             <Switch>

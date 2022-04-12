@@ -812,12 +812,18 @@ var __importStar = this && this.__importStar || function (mod) {
   return result;
 };
 
+var __importDefault = this && this.__importDefault || function (mod) {
+  return mod && mod.__esModule ? mod : {
+    "default": mod
+  };
+};
+
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports.NoMatch = void 0;
 
-var react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 
 var react_router_dom_1 = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 
@@ -833,16 +839,6 @@ exports.NoMatch = styled_components_1["default"].div(function (_a) {
 });
 
 var App = function App() {
-  var _a = (0, react_1.useState)([{
-    name: "Bijaya",
-    age: 25
-  }, {
-    name: "Ram",
-    age: 25
-  }]),
-      users = _a[0],
-      setUsers = _a[1];
-
   return react_1["default"].createElement(App_styles_1.AppRoot, null, react_1["default"].createElement(react_router_dom_1.Switch, null, routes_1.publicRoutes.map(function (_a, index) {
     var component = _a.component,
         path = _a.path;
@@ -859,6 +855,43 @@ var App = function App() {
 
 exports["default"] = App;
 var templateObject_1;
+
+/***/ }),
+
+/***/ "./resources/js/components/MainPage.tsx":
+/*!**********************************************!*\
+  !*** ./resources/js/components/MainPage.tsx ***!
+  \**********************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __importDefault = this && this.__importDefault || function (mod) {
+  return mod && mod.__esModule ? mod : {
+    "default": mod
+  };
+};
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports.MainPage = void 0;
+
+var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+
+var react_router_dom_1 = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+
+var MainPage_styles_1 = __webpack_require__(/*! ../styles/MainPage.styles */ "./resources/js/styles/MainPage.styles.ts");
+
+var Sidebar_1 = __webpack_require__(/*! ./Sidebar */ "./resources/js/components/Sidebar.tsx");
+
+var MainPage = function MainPage() {
+  var history = (0, react_router_dom_1.useHistory)();
+  return react_1["default"].createElement(MainPage_styles_1.MainPageRoot, null, react_1["default"].createElement(Sidebar_1.Sidebar, null));
+};
+
+exports.MainPage = MainPage;
 
 /***/ }),
 
@@ -899,10 +932,10 @@ exports.SecondPage = SecondPage;
 
 /***/ }),
 
-/***/ "./resources/js/components/WelcomePage.tsx":
-/*!*************************************************!*\
-  !*** ./resources/js/components/WelcomePage.tsx ***!
-  \*************************************************/
+/***/ "./resources/js/components/Sidebar.tsx":
+/*!*********************************************!*\
+  !*** ./resources/js/components/Sidebar.tsx ***!
+  \*********************************************/
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -917,22 +950,17 @@ var __importDefault = this && this.__importDefault || function (mod) {
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
-exports.WelcomePage = void 0;
+exports.Sidebar = void 0;
 
 var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 
-var react_router_dom_1 = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+var Sidebar_styles_1 = __webpack_require__(/*! ../styles/Sidebar.styles */ "./resources/js/styles/Sidebar.styles.ts");
 
-var WelcomePage = function WelcomePage() {
-  var history = (0, react_router_dom_1.useHistory)();
-  return react_1["default"].createElement("div", {
-    onClick: function onClick() {
-      return history.push("secondPage");
-    }
-  }, "TEST");
+var Sidebar = function Sidebar() {
+  return react_1["default"].createElement(Sidebar_styles_1.SidebarRoot, null, react_1["default"].createElement("div", null, "Logo"), react_1["default"].createElement("div", null, "Middle Icons"), react_1["default"].createElement("div", null, "Profile View"));
 };
 
-exports.WelcomePage = WelcomePage;
+exports.Sidebar = Sidebar;
 
 /***/ }),
 
@@ -983,10 +1011,10 @@ exports.publicRoutes = void 0;
 
 var SecondPage_1 = __webpack_require__(/*! ./components/SecondPage */ "./resources/js/components/SecondPage.tsx");
 
-var WelcomePage_1 = __webpack_require__(/*! ./components/WelcomePage */ "./resources/js/components/WelcomePage.tsx");
+var MainPage_1 = __webpack_require__(/*! ./components/MainPage */ "./resources/js/components/MainPage.tsx");
 
 exports.publicRoutes = [{
-  component: WelcomePage_1.WelcomePage,
+  component: MainPage_1.MainPage,
   path: "/"
 }, {
   component: SecondPage_1.SecondPage,
@@ -1066,6 +1094,158 @@ var styled_components_1 = __importStar(__webpack_require__(/*! styled-components
 exports.AppRoot = styled_components_1["default"].div(function (_a) {
   var theme = _a.theme;
   return (0, styled_components_1.css)(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n        height: inherit;\n        width: inherit;\n        display: flex;\n        font-family: \"Roboto\", \"Helvetica\", \"Arial\", sans-serif !important;\n        flex-direction: column;\n    "], ["\n        height: inherit;\n        width: inherit;\n        display: flex;\n        font-family: \"Roboto\", \"Helvetica\", \"Arial\", sans-serif !important;\n        flex-direction: column;\n    "])));
+});
+var templateObject_1;
+
+/***/ }),
+
+/***/ "./resources/js/styles/MainPage.styles.ts":
+/*!************************************************!*\
+  !*** ./resources/js/styles/MainPage.styles.ts ***!
+  \************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __makeTemplateObject = this && this.__makeTemplateObject || function (cooked, raw) {
+  if (Object.defineProperty) {
+    Object.defineProperty(cooked, "raw", {
+      value: raw
+    });
+  } else {
+    cooked.raw = raw;
+  }
+
+  return cooked;
+};
+
+var __createBinding = this && this.__createBinding || (Object.create ? function (o, m, k, k2) {
+  if (k2 === undefined) k2 = k;
+  var desc = Object.getOwnPropertyDescriptor(m, k);
+
+  if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+    desc = {
+      enumerable: true,
+      get: function get() {
+        return m[k];
+      }
+    };
+  }
+
+  Object.defineProperty(o, k2, desc);
+} : function (o, m, k, k2) {
+  if (k2 === undefined) k2 = k;
+  o[k2] = m[k];
+});
+
+var __setModuleDefault = this && this.__setModuleDefault || (Object.create ? function (o, v) {
+  Object.defineProperty(o, "default", {
+    enumerable: true,
+    value: v
+  });
+} : function (o, v) {
+  o["default"] = v;
+});
+
+var __importStar = this && this.__importStar || function (mod) {
+  if (mod && mod.__esModule) return mod;
+  var result = {};
+  if (mod != null) for (var k in mod) {
+    if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+  }
+
+  __setModuleDefault(result, mod);
+
+  return result;
+};
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports.MainPageRoot = void 0;
+
+var styled_components_1 = __importStar(__webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js"));
+
+exports.MainPageRoot = styled_components_1["default"].div(function (_a) {
+  var theme = _a.theme;
+  return (0, styled_components_1.css)(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n        flex: 1;\n        display: flex;\n    "], ["\n        flex: 1;\n        display: flex;\n    "])));
+});
+var templateObject_1;
+
+/***/ }),
+
+/***/ "./resources/js/styles/Sidebar.styles.ts":
+/*!***********************************************!*\
+  !*** ./resources/js/styles/Sidebar.styles.ts ***!
+  \***********************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __makeTemplateObject = this && this.__makeTemplateObject || function (cooked, raw) {
+  if (Object.defineProperty) {
+    Object.defineProperty(cooked, "raw", {
+      value: raw
+    });
+  } else {
+    cooked.raw = raw;
+  }
+
+  return cooked;
+};
+
+var __createBinding = this && this.__createBinding || (Object.create ? function (o, m, k, k2) {
+  if (k2 === undefined) k2 = k;
+  var desc = Object.getOwnPropertyDescriptor(m, k);
+
+  if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+    desc = {
+      enumerable: true,
+      get: function get() {
+        return m[k];
+      }
+    };
+  }
+
+  Object.defineProperty(o, k2, desc);
+} : function (o, m, k, k2) {
+  if (k2 === undefined) k2 = k;
+  o[k2] = m[k];
+});
+
+var __setModuleDefault = this && this.__setModuleDefault || (Object.create ? function (o, v) {
+  Object.defineProperty(o, "default", {
+    enumerable: true,
+    value: v
+  });
+} : function (o, v) {
+  o["default"] = v;
+});
+
+var __importStar = this && this.__importStar || function (mod) {
+  if (mod && mod.__esModule) return mod;
+  var result = {};
+  if (mod != null) for (var k in mod) {
+    if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+  }
+
+  __setModuleDefault(result, mod);
+
+  return result;
+};
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports.SidebarRoot = void 0;
+
+var styled_components_1 = __importStar(__webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js"));
+
+exports.SidebarRoot = styled_components_1["default"].div(function (_a) {
+  var theme = _a.theme;
+  return (0, styled_components_1.css)(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n        height: 100%;\n        width: 130px;\n        display: flex;\n        justify-content: space-around;\n        align-items: center;\n        flex-direction: column;\n        border-right: 1px solid #e9e9e9;\n    "], ["\n        height: 100%;\n        width: 130px;\n        display: flex;\n        justify-content: space-around;\n        align-items: center;\n        flex-direction: column;\n        border-right: 1px solid #e9e9e9;\n    "])));
 });
 var templateObject_1;
 
