@@ -1,6 +1,7 @@
 import React from "react";
 import { SecondPage } from "./components/SecondPage";
 import { MainPage } from "./components/MainPage";
+import { CreatePost } from "./components/CreatePost";
 
 interface IRoutes {
     component: React.ComponentType<any>;
@@ -13,7 +14,7 @@ export const publicRoutes = [
         path: "/",
     },
     {
-        component: SecondPage,
-        path: "/secondPage",
+        component: CreatePost,
+        path: "/createPost",
     },
 ] as IRoutes[];

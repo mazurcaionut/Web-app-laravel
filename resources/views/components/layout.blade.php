@@ -12,7 +12,7 @@ integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9If
 <div class="container py-3">
     <h1 class="p-3 mb-3 bg-primary text-white rounded">{{ config('app.name') }}</h1>
 
-    @auth
+    @autgh
         <form action="{{ route('logout') }}" method="POST">
             @csrf
             <button type="submit" class="btn btn-primary">Logout</button>

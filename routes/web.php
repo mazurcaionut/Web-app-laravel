@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\Route;
 
 // Route::get("/posts", [PostController::class, "index"]);
 
-require __DIR__.'/auth.php';
+// require __DIR__.'/auth.php';
 
 
 Route::middleware(["auth"])->group(function() {

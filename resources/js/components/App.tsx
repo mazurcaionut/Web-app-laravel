@@ -3,6 +3,10 @@ import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 import { publicRoutes } from "../routes";
 import styled, { css } from "styled-components";
 import { AppRoot } from "../styles/App.styles";
+import "@blueprintjs/core/lib/css/blueprint.css";
+import "@blueprintjs/icons/lib/css/blueprint-icons.css";
+import "@blueprintjs/popover2/lib/css/blueprint-popover2.css";
+// import "@blueprintjs/datetime/lib/css/blueprint-datetime.css";
 
 export const NoMatch = styled.div(
     ({ theme }) => css`
