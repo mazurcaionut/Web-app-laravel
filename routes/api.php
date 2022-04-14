@@ -15,22 +15,30 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+
+
+Route::group(['prefix' => 'users', 'middleware' => 'CORS'], function ($router) {
+    Route::post('/register', [UserController::class, 'register'])->name('register.user');
+    Route::post('/login', [UserController::class, 'login'])->name('login.user');
+    Route::get('/view-profile', [UserController::class, 'viewProfile'])->name('profile.user');
+    Route::get('/logout', [UserController::class, 'logout'])->name('logout.user');
 });
 
 
-Route::middleware("auth:api")->group(function(){
-    Route::get("posts", [PostController::class, "apiIndex"])->name("api.posts.index");
+// Route::middleware("auth:api")->group(function(){
+//     Route::get("posts", [PostController::class, "apiIndex"])->name("api.posts.index");
 
-    Route::get("comments", [CommentController::class, "apiIndex"])->name("api.comments.index");
+//     Route::get("comments", [CommentController::class, "apiIndex"])->name("api.comments.index");
     
-    Route::post("posts", [PostController::class, "apiStore"])->name("api.posts.store");
+//     Route::post("posts", [PostController::class, "apiStore"])->name("api.posts.store");
     
-    Route::post("comments", [CommentController::class, "apiStore"])->name("api.comments.store");
+//     Route::post("comments", [CommentController::class, "apiStore"])->name("api.comments.store");
 
-    Route::get("currentUser", [UserController::class, "currentUser"])->name("api.posts.currentUser");
-});
+//     Route::get("currentUser", [UserController::class, "currentUser"])->name("api.posts.currentUser");
+// });
 
 // Route::middleware(["auth"])->group(function() {
 
