@@ -12,6 +12,8 @@ import "@blueprintjs/core/lib/css/blueprint.css";
 import "@blueprintjs/icons/lib/css/blueprint-icons.css";
 import "@blueprintjs/popover2/lib/css/blueprint-popover2.css";
 import { PrivateRoute } from "./PrivateRoute";
+import { Providers } from "./Providers";
+import "react-toastify/dist/ReactToastify.css";
 // import "@blueprintjs/datetime/lib/css/blueprint-datetime.css";
 
 export const NoMatch = styled.div(
@@ -24,7 +26,7 @@ export const NoMatch = styled.div(
 );
 
 export const NoMatchComponent = () => {
-    return <Redirect to="/login" />;
+    return <Redirect to="/dashboard" />;
 };
 export interface IUser {
     name: string;
@@ -34,26 +36,28 @@ export interface IUser {
 const App = () => {
     return (
         <AppRoot>
-            <Switch>
-                {privateRoutes.map(({ component, path }, index) => (
-                    <PrivateRoute
-                        exact
-                        key={index + 1}
-                        path={path}
-                        component={component}
-                    />
-                ))}
+            <Providers>
+                <Switch>
+                    {privateRoutes.map(({ component, path }, index) => (
+                        <PrivateRoute
+                            exact
+                            key={index + 1}
+                            path={path}
+                            component={component}
+                        />
+                    ))}
 
-                {publicRoutes.map(({ component, path }, index) => (
-                    <Route
-                        exact
-                        key={index + 1}
-                        path={path}
-                        component={component}
-                    />
-                ))}
-                <Route component={NoMatchComponent} />
-            </Switch>
+                    {publicRoutes.map(({ component, path }, index) => (
+                        <Route
+                            exact
+                            key={index + 1}
+                            path={path}
+                            component={component}
+                        />
+                    ))}
+                    <Route component={NoMatchComponent} />
+                </Switch>
+            </Providers>
         </AppRoot>
     );
 };

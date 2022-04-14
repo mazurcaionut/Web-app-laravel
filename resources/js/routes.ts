@@ -31,8 +31,4 @@ export const publicRoutes: IRoutes[] = [
         component: RegisterView,
         path: "/register",
     },
-    // {
-    //     component: NoMatch,
-    //     path: "/",
-    // },
 ];

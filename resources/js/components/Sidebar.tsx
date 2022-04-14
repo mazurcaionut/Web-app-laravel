@@ -10,6 +10,7 @@ import axios from "axios";
 import { useHistory } from "react-router-dom";
 import Logo from "../../images/IdeaFactory.png";
 import { Dialog } from "@blueprintjs/core";
+import { useLogout } from "../hooks/useLogout";
 
 interface IUser {
     id: number;
@@ -22,6 +23,7 @@ export const Sidebar = () => {
     const [loading, setLoading] = useState(true);
     const [currentUser, setCurrentUser] = useState<IUser | null>(null);
     const [dialogOpen, setDialogOpen] = useState(false);
+    const { loading: logOutLoading, logOut } = useLogout();
 
     const fetchData = async () => {
         setLoading(true);
@@ -48,14 +50,7 @@ export const Sidebar = () => {
         fetchData();
     }, []);
 
-    const onLogoutButton = async () => {
-        await axios
-            .post("/logout")
-            .then((response) => history.push("/login"))
-            .catch((error) => {
-                console.error("There was an error!", error);
-            });
-    };
+    const onLogoutButton = async () => await logOut();
 
     const redirectTo = (newRoute: string) => () => history.push(newRoute);
 
