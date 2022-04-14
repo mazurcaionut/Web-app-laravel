@@ -20,6 +20,12 @@ class PostController extends Controller
         return view("posts.index", ["posts"=>$posts]);
     }
 
+
+    public function apiIndex()
+    {
+        $posts = Post::all();
+        return $posts;
+    }
     /**
      * Show the form for creating a new resource.
      *

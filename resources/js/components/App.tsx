@@ -1,8 +1,18 @@
 import React, { useState } from "react";
-import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
-import { publicRoutes } from "../routes";
+import {
+    Route,
+    BrowserRouter as Router,
+    Switch,
+    Redirect,
+} from "react-router-dom";
+import { privateRoutes, publicRoutes } from "../routes";
 import styled, { css } from "styled-components";
 import { AppRoot } from "../styles/App.styles";
+import "@blueprintjs/core/lib/css/blueprint.css";
+import "@blueprintjs/icons/lib/css/blueprint-icons.css";
+import "@blueprintjs/popover2/lib/css/blueprint-popover2.css";
+import { PrivateRoute } from "./PrivateRoute";
+// import "@blueprintjs/datetime/lib/css/blueprint-datetime.css";
 
 export const NoMatch = styled.div(
     ({ theme }) => css`
@@ -13,26 +23,27 @@ export const NoMatch = styled.div(
     `
 );
 
+export const NoMatchComponent = () => {
+    return <Redirect to="/login" />;
+};
 export interface IUser {
     name: string;
     age: number;
 }
 
 const App = () => {
-    const [users, setUsers] = useState<IUser[]>([
-        {
-            name: "Bijaya",
-            age: 25,
-        },
-        {
-            name: "Ram",
-            age: 25,
-        },
-    ]);
-
     return (
         <AppRoot>
             <Switch>
+                {privateRoutes.map(({ component, path }, index) => (
+                    <PrivateRoute
+                        exact
+                        key={index + 1}
+                        path={path}
+                        component={component}
+                    />
+                ))}
+
                 {publicRoutes.map(({ component, path }, index) => (
                     <Route
                         exact
@@ -41,7 +52,7 @@ const App = () => {
                         component={component}
                     />
                 ))}
-                <Route component={NoMatch} />
+                <Route component={NoMatchComponent} />
             </Switch>
         </AppRoot>
     );

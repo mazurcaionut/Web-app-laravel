@@ -26,7 +26,7 @@ class PostsTableSeeder extends Seeder
         $post1->save();
 
 
-        $posts = Post::factory()->count(5)->state(new Sequence(
+        $posts = Post::factory()->count(10)->state(new Sequence(
             function ($sequence) {
                 $user = User::get()->random();
 
