@@ -6,7 +6,6 @@ export const CreatePost = () => {
     return (
         <>
             <Sidebar />
-            <MainPageContent />
         </>
     );
 };

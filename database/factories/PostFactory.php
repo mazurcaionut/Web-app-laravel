@@ -18,10 +18,10 @@ class PostFactory extends Factory
     {
         return [
             'title' => $this->faker->
-                sentence($nbWords = rand($min = 3, $max = 9), $variableNbWords = true),
+            sentence($nbWords = rand($min = 3, $max = 15), $variableNbWords = true),
             'description' => $this->faker->
-                sentence($nbWords = rand($min = 3, $max = 17), $variableNbWords = true),
-            'image' => $this->faker->url(),
+                sentence($nbWords = rand($min = 500, $max = 1000), $variableNbWords = true),
+            'image' => $this->faker->imageUrl(600, 600),
         ];
     }
 }

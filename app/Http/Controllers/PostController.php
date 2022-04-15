@@ -3,10 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Post;
+use \App\Models\Post;
 
 class PostController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware("auth:api");
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -23,8 +28,17 @@ class PostController extends Controller
 
     public function apiIndex()
     {
-        $posts = Post::all();
-        return $posts;
+        $responseMessage = "Posts data";
+
+        $postsWithRelations = Post::with("user")->get();
+
+        $data = $postsWithRelations;
+
+        return response()->json([
+            "success" => true,
+            "message" => $responseMessage,
+            "data" => $data
+        ], 200);
     }
     /**
      * Show the form for creating a new resource.

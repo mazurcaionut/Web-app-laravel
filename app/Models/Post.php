@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use User;
-use Comment;
+use \App\Models\User;
+use \App\Models\Comment;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 

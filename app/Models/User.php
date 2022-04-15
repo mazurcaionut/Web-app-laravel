@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use Post;
-use Comment;
+use \App\Models\Post;
+use \App\Models\Comment;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;

@@ -17,31 +17,29 @@ export const useLogin = () => {
         setLoading(true);
 
         try {
-            await axios({
+            const { data } = await axios({
                 method: "POST",
                 url: `http://localhost/api/${loginURL}`,
                 data: JSON.stringify(submissionData),
                 headers: {
                     "Content-Type": "application/json",
                 },
-            }).then((response) => {
-                console.log("Response token: ", response.data.token);
-
-                if (response.data.token) {
-                    // const token = response.data.token.replace(/^"(.*)"$/, "$1");
-                    const token = response.data.token;
-
-                    setAuthToken(token);
-
-                    show({
-                        message: "Logged in successfully",
-                        intent: "success",
-                    });
-                    history.push("/dashboard");
-                } else {
-                    show({ message: "Token failed", intent: "error" });
-                }
             });
+
+            if (data.token) {
+                // const token = response.data.token.replace(/^"(.*)"$/, "$1");
+                const token = data.token;
+
+                setAuthToken(token);
+
+                show({
+                    message: "Logged in successfully",
+                    intent: "success",
+                });
+                history.push("/dashboard");
+            } else {
+                show({ message: "Token failed", intent: "error" });
+            }
         } catch ({ message }) {
             show({ message, intent: "error" });
         }

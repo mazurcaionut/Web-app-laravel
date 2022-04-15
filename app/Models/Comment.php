@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use User;
+use \App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -19,5 +19,13 @@ class Comment extends Model
         return $this->morphMany(Comment::class, 'commentable');
     }
 
+
+    public function delete() {
+        foreach($this->comments as $comment) {
+            $comment->delete();
+        }
+
+        return parent::delete();
+    }
 
 }

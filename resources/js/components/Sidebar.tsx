@@ -1,58 +1,30 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
+    AvatarImg,
     LogoContainer,
     LogoutButton,
     MiddleIcons,
     SidebarRoot,
+    UserAvatar,
 } from "../styles/Sidebar.styles";
-import { Icon, Position, Button, Spinner, mergeRefs } from "@blueprintjs/core";
-import axios from "axios";
+import { Icon, Spinner } from "@blueprintjs/core";
 import { useHistory } from "react-router-dom";
-import Logo from "../../images/IdeaFactory.png";
 import { Dialog } from "@blueprintjs/core";
 import { useLogout } from "../hooks/useLogout";
-
-interface IUser {
-    id: number;
-    name: string;
-    email: string;
-}
+import { useCurrentUser } from "../hooks/useCurrentUser";
+import { Avatar } from "./Avatar";
 
 export const Sidebar = () => {
     const history = useHistory();
-    const [loading, setLoading] = useState(true);
-    const [currentUser, setCurrentUser] = useState<IUser | null>(null);
+    const { user, loading } = useCurrentUser();
     const [dialogOpen, setDialogOpen] = useState(false);
     const { loading: logOutLoading, logOut } = useLogout();
-
-    const fetchData = async () => {
-        setLoading(true);
-
-        try {
-            const { data: responseUser } = await axios.get("/api/currentUser");
-
-            console.log("\n\n", responseUser, "\n\n");
-
-            setCurrentUser({
-                id: responseUser.id,
-                email: responseUser.email,
-                name: responseUser.name,
-            });
-            // setPostsItems(response.map((item: { title: any }) => item.title));
-        } catch (error) {
-            console.error(error);
-        }
-
-        setLoading(false);
-    };
-
-    useEffect(() => {
-        fetchData();
-    }, []);
 
     const onLogoutButton = async () => await logOut();
 
     const redirectTo = (newRoute: string) => () => history.push(newRoute);
+
+    const openProfileSettings = () => setDialogOpen(true);
 
     return (
         <SidebarRoot>
@@ -76,16 +48,11 @@ export const Sidebar = () => {
                     style={{ cursor: "pointer" }}
                     size={40}
                     icon="edit"
-                    onClick={redirectTo("/createPost")}
+                    onClick={redirectTo("/dashboard/create")}
                 />
             </MiddleIcons>
-            {loading ? (
-                <Spinner />
-            ) : (
-                <div onClick={() => setDialogOpen(true)}>
-                    {currentUser?.name}
-                </div>
-            )}
+
+            <Avatar user={user} openProfileSettings={openProfileSettings} />
             <LogoutButton onClick={onLogoutButton} size={40} icon="log-out" />
             <Dialog
                 onClose={() => setDialogOpen(false)}
