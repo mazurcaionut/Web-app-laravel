@@ -6,6 +6,7 @@ export const ListPostItemRoot = styled.div(
         border-bottom: 1px solid #e9e9e9;
         height: 200px;
         display: flex;
+        justify-content: space-between;
         padding: 20px;
         gap: 10px;
         box-sizing: border-box;
@@ -43,14 +44,26 @@ export const ListPostItemTitle = styled.p(
 
 interface IPostImage {
     image: string;
+    height?: number;
+    width?: number;
 }
 
 export const PostImage = styled.div<IPostImage>(
-    ({ theme, image }) => css`
+    ({ theme, image, height, width }) => css`
         height: 100%;
         min-width: 300px;
         background-image: url(${image});
         background-size: cover;
         background-position: center;
+
+        ${height &&
+        css`
+            height: ${height}px;
+        `}
+
+        ${width &&
+        css`
+            width: ${width}px;
+        `}
     `
 );

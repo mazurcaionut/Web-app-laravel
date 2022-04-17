@@ -28,6 +28,7 @@ class CORSMiddleware
         $response->header('Access-Control-Allow-Headers',$request->header('Access-Control-Request-Headers'));
         $response->header('Access-Control-Allow-Credentials','true');
         $response->header('Accept','application/json');
+        // $response->header('Accept','multipart/form-data');
         $response->header('Access-Control-Expose-Headers','location');
         return $response;
     }

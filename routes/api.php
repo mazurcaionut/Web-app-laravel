@@ -26,6 +26,7 @@ Route::group(['prefix' => 'users', 'middleware' => 'CORS'], function ($router) {
 
 Route::group(['prefix' => 'posts', 'middleware' => 'CORS'], function ($router) {
     Route::get('/all', [PostController::class, 'apiIndex'])->name('apiIndex.posts');
+    Route::post('/create', [PostController::class, 'store'])->name('store.posts');
     // Route::post('/register', [UserController::class, 'register'])->name('register.user');
     // Route::post('/login', [UserController::class, 'login'])->name('login.user');
     // Route::get('/view-profile', [UserController::class, 'viewProfile'])->name('profile.user');
