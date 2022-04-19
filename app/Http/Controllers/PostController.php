@@ -28,40 +28,14 @@ class PostController extends Controller
     }
 
 
-    public function apiIndex()
+    public function getAll()
     {
         $responseMessage = "Posts data";
 
-        $expiresAt = new \DateTime('tomorrow');
-
-        // $storage = app("firebaseStorage");
-
-        $imageReference = app("firebase.storage")->getBucket()->object("Images/DefaultImage.jpg");
-
-        $imageUrl = $imageReference->signedUrl($expiresAt);
-
-        $postsWithRelations = Post::with("user")->get();
-
-        $updatedPosts = [];
-
-        // foreach($postsWithRelations as $post) {
-        //     $post->image = $imageUrl;
-        //     $updatedPosts[] = $post;
-        // }
-
-        // $postsWithRelations = Post::with("user")->state(new Sequence(
-        //     function ($sequence) {
-
-        //         return [
-        //             "image" => $imageUrl,
-        //         ];
-        //     }
-        // ))->get();
+        $postsWithRelations = Post::with("user")->orderBy("created_at", "DESC")->get();
 
         $data = $postsWithRelations;
-        // $data = $updatedPosts;
-    ;
-
+    
         return response()->json([
             "success" => true,
             "message" => $responseMessage,
@@ -130,7 +104,8 @@ class PostController extends Controller
 
 
             if ($imageReference->exists()) {
-                $expiresAt = new \DateTime('tomorrow');
+                $now = new \DateTime();
+                $expiresAt = $now->add(new \DateInterval("P1Y"));
                 $image = $imageReference->signedUrl($expiresAt);
 
                 $newPost = new Post();
@@ -177,9 +152,17 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function getOne($id)
     {
         //
+        $responseMessage = "Single post data";
+        $post = Post::with("user","comments")->findOrFail($id);
+
+        return response()->json([
+            "success" => true,
+            "message" => $responseMessage,
+            "data" => $post
+        ], 200);
     }
 
     /**
@@ -203,6 +186,70 @@ class PostController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $updatedPost = Post::findOrFail($id);
+
+        if($request->has("title")) {
+            $updatedPost->title = $request->title; 
+        }
+
+        if($request->has("description")) {
+            $updatedPost->description = $request->description; 
+        }
+
+        if($request->has("image")) {
+            // $updatedPost->description = $request->description; 
+            $image = $request->file('image');
+
+            $firebase_storage_path = "Images/";
+            $localFolder = public_path("firebase-temp-uploads")."/";
+            $extension = $image->getClientOriginalExtension();
+            $fileName = $request->title; 
+            $randomUniqueString = Str::random(15);
+            $file = $randomUniqueString . $fileName . "." . $extension;
+    
+    
+            if($image->move($localFolder, $file)) {
+                $uploadedFile = fopen($localFolder.$file, "r");
+        
+                app("firebase.storage")->getBucket()->upload($uploadedFile, ["name" => $firebase_storage_path. $file]);
+    
+                unlink($localFolder.$file);
+    
+                $imageReference = app("firebase.storage")->getBucket()->object($firebase_storage_path. $file);
+    
+    
+                if ($imageReference->exists()) {
+                    $now = new \DateTime();
+                    $expiresAt = $now->add(new \DateInterval("P1Y"));
+                    $image = $imageReference->signedUrl($expiresAt);
+    
+                    $updatedPost->image = $image; 
+    
+    
+                  } else {
+                    return response()->json([
+                        'success' => false,
+                        'message' => "File didn't upload properly"
+                        ], 500);    
+                }
+    
+            } else {
+                return response()->json([
+                    'success' => false,
+                    'message' => "Something wrong with file copy"
+                    ], 500);
+            }
+        }
+
+
+        $updatedPost->save();
+
+        $responseMessage = "Post updated successfully";
+
+        return response()->json([
+            "success" => true,
+            "message" => $responseMessage,
+        ], 200);
     }
 
     /**
@@ -214,5 +261,15 @@ class PostController extends Controller
     public function destroy($id)
     {
         //
+        $post = Post::findOrFail($id);
+        $post->delete();
+
+        $responseMessage = "Post deleted successfully";
+
+        return response()->json([
+            "success" => true,
+            "message" => $responseMessage,
+            // "data" => $newComment
+        ], 200);
     }
 }
