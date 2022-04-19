@@ -4,22 +4,23 @@ import { useHistory } from "react-router-dom";
 import { IUserLogin } from "../components/LoginView";
 import { AUTH_TOKEN } from "../storage";
 import { useLocalStorage } from "./useLocalStorage";
+import { Post } from "./useSinglePost";
 import { useToast } from "./useToast";
 
-interface IUser {
-    id: number;
-    name: string;
-    email: string;
-}
+// interface IUser {
+//     id: number;
+//     name: string;
+//     email: string;
+// }
 
 export const usePosts = () => {
-    const [posts, setPosts] = useState<any[]>([]);
+    const [posts, setPosts] = useState<Post[]>([]);
     const [loading, setLoading] = useState(false);
     const show = useToast();
     const postsURL = "posts/all";
     const [token] = useLocalStorage(AUTH_TOKEN);
 
-    const fetchUser = async () => {
+    const fetchPosts = async () => {
         setLoading(true);
 
         try {
@@ -35,7 +36,7 @@ export const usePosts = () => {
 
             console.log("\n\nData incoming: ", data, "\n\n");
 
-            setPosts(data.data);
+            setPosts(data.data as Post[]);
         } catch ({ message }) {
             show({ message, intent: "error" });
         }
@@ -44,11 +45,12 @@ export const usePosts = () => {
     };
 
     useEffect(() => {
-        fetchUser();
+        fetchPosts();
     }, []);
 
     return {
         posts,
         loading,
+        fetchPosts,
     };
 };

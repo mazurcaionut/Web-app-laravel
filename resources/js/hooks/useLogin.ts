@@ -41,7 +41,7 @@ export const useLogin = () => {
                 show({ message: "Token failed", intent: "error" });
             }
         } catch ({ message }) {
-            show({ message, intent: "error" });
+            show({ message: message as string, intent: "error" });
         }
 
         setLoading(false);
