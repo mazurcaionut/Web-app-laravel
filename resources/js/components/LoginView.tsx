@@ -6,6 +6,7 @@ import {
     GuestPageLogo,
     GuestPageRoot,
 } from "../styles/LoginView.styles";
+import { LockIcon, UnlockIcon } from "../styles/ProfileView.styles";
 
 export interface IUserLogin {
     email: string;
@@ -14,12 +15,27 @@ export interface IUserLogin {
 
 export const LoginView = () => {
     const [disableSubmit, setDisableSubmit] = useState(true);
+    const [showPassword, setShowPassword] = useState<string>("none");
+
     const { loading, login } = useLogin();
 
     const [fields, setFields] = useState<IUserLogin>({
         email: "",
         password: "",
     });
+
+    const onEyeClick = (field: string) => () =>
+        showPassword === field
+            ? setShowPassword("none")
+            : setShowPassword(field);
+
+    const lockButton = (field: string) => (
+        <LockIcon size={20} onClick={onEyeClick(field)} />
+    );
+
+    const unlockButton = (field: string) => (
+        <UnlockIcon size={20} onClick={onEyeClick(field)} />
+    );
 
     const handleSubmit = async () => await login(fields);
 
@@ -68,7 +84,13 @@ export const LoginView = () => {
                         required
                         value={fields.password}
                         onChange={handleChange("password")}
-                        type="password"
+                        // type="password"
+                        type={showPassword === "password" ? "text" : "password"}
+                        rightElement={
+                            showPassword !== "password"
+                                ? unlockButton("password")
+                                : lockButton("password")
+                        }
                     />
                 </FormGroup>
                 <div>
