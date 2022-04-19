@@ -6,16 +6,17 @@ import { AUTH_TOKEN } from "../storage";
 import { useLocalStorage } from "./useLocalStorage";
 import { useToast } from "./useToast";
 import DefaultProfile from "../../images/BlankPicture.png";
+import { User } from "./useSinglePost";
 
-export interface IUser {
-    id: number;
-    name: string;
-    email: string;
-    imageURL: string | null;
-}
+// export interface IUser {
+//     id: number;
+//     name: string;
+//     email: string;
+//     imageURL: string | null;
+// }
 
 export const useCurrentUser = () => {
-    const [currentUser, setCurrentUser] = useState<IUser | null>(null);
+    const [currentUser, setCurrentUser] = useState<User | null>(null);
     const [loading, setLoading] = useState(false);
     const show = useToast();
     const viewProfileURL = "users/view-profile";
@@ -35,18 +36,16 @@ export const useCurrentUser = () => {
                 },
             });
 
-            setCurrentUser({
-                id: data.data.id,
-                email: data.data.email,
-                name: data.data.name,
-                imageURL: data.data.image,
-            });
+            setCurrentUser(data.data);
+            console.log("User: ", data.data);
         } catch ({ message }) {
             show({ message, intent: "error" });
         }
 
         setLoading(false);
     };
+
+    const updateUserProfile = async () => {};
 
     useEffect(() => {
         fetchUser();

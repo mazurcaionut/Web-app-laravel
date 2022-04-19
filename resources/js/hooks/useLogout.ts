@@ -35,7 +35,7 @@ export const useLogout = () => {
             });
             history.push("/login");
         } catch ({ message }) {
-            show({ message, intent: "error" });
+            show({ message: message as string, intent: "error" });
         }
 
         setLoading(false);

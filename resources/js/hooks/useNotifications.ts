@@ -4,29 +4,31 @@ import { useHistory } from "react-router-dom";
 import { IUserLogin } from "../components/LoginView";
 import { AUTH_TOKEN } from "../storage";
 import { useLocalStorage } from "./useLocalStorage";
-import { Post } from "./useSinglePost";
 import { useToast } from "./useToast";
+import DefaultProfile from "../../images/BlankPicture.png";
+import { Notification, User } from "./useSinglePost";
 
-// interface IUser {
+// export interface IUser {
 //     id: number;
 //     name: string;
 //     email: string;
+//     imageURL: string | null;
 // }
 
-export const usePosts = () => {
-    const [posts, setPosts] = useState<Post[]>([]);
+export const useNotifications = () => {
+    const [notifications, setNotifications] = useState<Notification[]>([]);
     const [loading, setLoading] = useState(false);
     const show = useToast();
-    const postsURL = "posts/all";
+    const notificationsURL = "users/notifications";
     const [token] = useLocalStorage(AUTH_TOKEN);
 
-    const fetchPosts = async () => {
+    const fetchNotifications = async () => {
         setLoading(true);
 
         try {
             const { data } = await axios({
                 method: "GET",
-                url: `http://localhost/api/${postsURL}`,
+                url: `http://localhost/api/${notificationsURL}`,
                 responseType: "json",
                 headers: {
                     Authorization: "Bearer " + token,
@@ -34,9 +36,8 @@ export const usePosts = () => {
                 },
             });
 
-            console.log("\n\nData incoming: ", data, "\n\n");
-
-            setPosts(data.data as Post[]);
+            console.log("Notificatgions: ", data.data);
+            setNotifications(data.data);
         } catch ({ message }) {
             show({ message, intent: "error" });
         }
@@ -45,12 +46,11 @@ export const usePosts = () => {
     };
 
     useEffect(() => {
-        fetchPosts();
+        fetchNotifications();
     }, []);
 
     return {
-        posts,
+        notifications,
         loading,
-        fetchPosts,
     };
 };
