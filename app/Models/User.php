@@ -4,6 +4,7 @@ namespace App\Models;
 
 use \App\Models\Post;
 use \App\Models\Comment;
+use \App\Models\Notification;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -53,6 +54,9 @@ class User extends Authenticatable
         return $this->hasMany(Comment::class);
     }
 
+    public function notifications() {
+        return $this->hasMany(Notification::class)->orderBy("created_at", "DESC");;
+    }
 
     public function delete() {
         foreach($this->comments as $comment) {
