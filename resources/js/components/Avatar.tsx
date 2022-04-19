@@ -1,11 +1,11 @@
 import { Spinner } from "@blueprintjs/core";
 import React from "react";
-import { IUser } from "../hooks/useCurrentUser";
 import { AvatarImg, UserAvatar } from "../styles/Sidebar.styles";
 import DefaultAvatar from "../../images/BlankPicture.png";
+import { User } from "../hooks/useSinglePost";
 
 interface AvatarProps {
-    user: IUser | null;
+    user: User | null;
     loading?: boolean;
     size?: number;
     openProfileSettings?: () => void;
@@ -28,7 +28,7 @@ export const Avatar = ({
                 >
                     <AvatarImg
                         alt={user.name ?? ""}
-                        src={user.imageURL ?? DefaultAvatar}
+                        src={user.image ?? DefaultAvatar}
                         size={size}
                     />
                 </UserAvatar>
