@@ -5,6 +5,7 @@ import { CreatePost } from "./components/CreatePost";
 import { LoginView } from "./components/LoginView";
 import { RegisterView } from "./components/RegisterView";
 import { NoMatch } from "./components/App";
+import { Post } from "./components/Post";
 
 interface IRoutes {
     component: React.ComponentType<any>;
@@ -13,12 +14,16 @@ interface IRoutes {
 
 export const privateRoutes: IRoutes[] = [
     {
-        component: MainPage,
-        path: "/dashboard",
+        component: CreatePost,
+        path: "/dashboard/create",
     },
     {
-        component: CreatePost,
-        path: "/dashboard/createPost",
+        component: Post,
+        path: "/dashboard/:id",
+    },
+    {
+        component: MainPage,
+        path: "/dashboard",
     },
 ];
 
@@ -31,8 +36,4 @@ export const publicRoutes: IRoutes[] = [
         component: RegisterView,
         path: "/register",
     },
-    // {
-    //     component: NoMatch,
-    //     path: "/",
-    // },
 ];

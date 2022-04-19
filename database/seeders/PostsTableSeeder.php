@@ -17,13 +17,13 @@ class PostsTableSeeder extends Seeder
      */
     public function run()
     {
-        $post1 = new Post();
-        $post1->title = 'Post title';
-        $post1->description = "Post description";
-        $post1->image = "url";
-        $post1->user_id = 1;
+        // $post1 = new Post();
+        // $post1->title = 'Post title';
+        // $post1->description = "Post description";
+        // $post1->image = "url";
+        // $post1->user_id = 1;
 
-        $post1->save();
+        // $post1->save();
 
 
         $posts = Post::factory()->count(10)->state(new Sequence(

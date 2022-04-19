@@ -13,7 +13,6 @@ export const PrivateRoute = ({ component, path, exact }: PrivateRouteProps) => {
 
         if (token) {
             setAuthenticated(true);
-            history.push("/dashboard");
         } else {
             history.push("/login");
         }

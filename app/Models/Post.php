@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use User;
-use Comment;
+use \App\Models\User;
+use \App\Models\Comment;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -18,7 +18,11 @@ class Post extends Model
 
 
     public function comments() {
-        return $this->morphMany(Comment::class, 'commentable');
+        return $this->morphMany(Comment::class, 'commentable')->orderBy("created_at", "DESC");
+    }
+
+    public function allComments() {
+        return $this->hasMany(Comment::class);
     }
 
 

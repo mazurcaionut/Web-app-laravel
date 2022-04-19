@@ -42,3 +42,30 @@ export const LogoContainer = styled.div(
         cursor: pointer;
     `
 );
+
+interface IUserAvatar {
+    size?: number;
+}
+
+export const UserAvatar = styled.div<IUserAvatar>(
+    ({ theme, size = 40 }) => css`
+        border-radius: ${size}px;
+        width: ${size}px;
+        height: ${size}px;
+        overflow: hidden;
+        border: 1px solid transparent;
+        background-image: linear-gradient(#017699, #017699),
+            linear-gradient(to bottom, #e9e9e9 0%, #e9e9e9 100%);
+        background-origin: border-box;
+        background-clip: content-box, border-box;
+        cursor: pointer;
+        transition: all 0.4s ease;
+    `
+);
+
+export const AvatarImg = styled.img<IUserAvatar>(
+    ({ theme, size = 40 }) => css`
+        width: ${size}px;
+        height: ${size}px;
+    `
+);

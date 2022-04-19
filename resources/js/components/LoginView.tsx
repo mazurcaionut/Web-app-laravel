@@ -1,12 +1,38 @@
 import { Button, FormGroup, Icon, InputGroup } from "@blueprintjs/core";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useLogin } from "../hooks/useLogin";
 import {
     FormContainer,
     GuestPageLogo,
     GuestPageRoot,
 } from "../styles/LoginView.styles";
 
+export interface IUserLogin {
+    email: string;
+    password: string;
+}
+
 export const LoginView = () => {
+    const [disableSubmit, setDisableSubmit] = useState(true);
+    const { loading, login } = useLogin();
+
+    const [fields, setFields] = useState<IUserLogin>({
+        email: "",
+        password: "",
+    });
+
+    const handleSubmit = async () => await login(fields);
+
+    const handleChange =
+        (field: string) => (event: React.ChangeEvent<HTMLInputElement>) =>
+            setFields({ ...fields, [field]: event.target.value });
+
+    useEffect(() => {
+        fields.email == "" || fields.password == ""
+            ? setDisableSubmit(true)
+            : setDisableSubmit(false);
+    }, [fields]);
+
     return (
         <GuestPageRoot>
             <GuestPageLogo />
@@ -31,15 +57,31 @@ export const LoginView = () => {
                     }}
                 />
                 <FormGroup label="Email address" labelInfo="(required)">
-                    <InputGroup />
+                    <InputGroup
+                        required
+                        value={fields.email}
+                        onChange={handleChange("email")}
+                    />
                 </FormGroup>
                 <FormGroup label="Password" labelInfo="(required)">
-                    <InputGroup type="password" />
+                    <InputGroup
+                        required
+                        value={fields.password}
+                        onChange={handleChange("password")}
+                        type="password"
+                    />
                 </FormGroup>
                 <div>
                     <a href="/register">Not a user? Create an account</a>
                 </div>
-                <Button icon="log-in">Sign in</Button>
+                <Button
+                    loading={loading}
+                    onClick={handleSubmit}
+                    disabled={disableSubmit}
+                    icon="log-in"
+                >
+                    Sign in
+                </Button>
             </FormContainer>
         </GuestPageRoot>
     );

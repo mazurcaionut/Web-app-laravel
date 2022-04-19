@@ -96,11 +96,14 @@ class UserController extends Controller
     public function viewProfile()
     {
         $responseMessage = "user profile";
-        $data = Auth::guard("api")->user();
+        $user = Auth::guard("api")->user();
+
+        // $currentUserId = Auth::guard("api")->id();
+        // $data = User::with("notifications")->findOrFail($currentUserId);
         return response()->json([
         "success" => true,
         "message" => $responseMessage,
-        "data" => $data
+        "data" => $user
         ], 200);
     }
 
@@ -116,11 +119,11 @@ class UserController extends Controller
         ], 200);
     }
 
-    public function currentUser()
-    {
-        $user = auth("api")->user();
-        return $user;
-    }
+    // public function currentUser()
+    // {
+    //     $user = auth("api")->user();
+    //     return $user;
+    // }
 
     /**
      * Display a listing of the resource.
