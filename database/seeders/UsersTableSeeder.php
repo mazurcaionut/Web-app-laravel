@@ -16,13 +16,13 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        $user = new User();
-        $user->name = "Jordan";
-        $user->email = "Jordan's email";
-        $user->password = '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi';
-        $user->save();
+        // $user = new User();
+        // $user->name = "Jordan";
+        // $user->email = "Jordan's email";
+        // $user->password = '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi';
+        // $user->save();
 
 
-        User::factory()->count(4)->create();
+        User::factory()->count(5)->create();
     }
 }

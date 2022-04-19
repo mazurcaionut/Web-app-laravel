@@ -1,5 +1,5 @@
 import { Button, FormGroup, InputGroup } from "@blueprintjs/core";
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { PageContentRoot } from "../styles/PageContent.styles";
 import { MainPageContent } from "./PageContent";
@@ -31,11 +31,20 @@ export const CreatePost = () => {
     const show = useToast();
     const createPostURL = "posts/create";
     const [token] = useLocalStorage(AUTH_TOKEN);
+    const textAreaRef = useRef<HTMLTextAreaElement>(null);
+
+    useEffect(() => {
+        if (textAreaRef.current) {
+            textAreaRef.current.style.height = "0px";
+            const scrollHeight = textAreaRef.current?.scrollHeight;
+            textAreaRef.current.style.height = scrollHeight + "px";
+        }
+    }, [fields.description]);
 
     const onTitleChange = (event: ChangeEvent<HTMLInputElement>) =>
         setFields({ ...fields, title: event.target.value });
 
-    const onDescriptionChange = (event: ChangeEvent<HTMLInputElement>) =>
+    const onDescriptionChange = (event: ChangeEvent<HTMLTextAreaElement>) =>
         setFields({ ...fields, description: event.target.value });
 
     const onFileChange = ({
@@ -116,6 +125,19 @@ export const CreatePost = () => {
                         />
                     </FormGroup>
                     <FormGroup label="Post description" labelInfo="(required)">
+                        <textarea
+                            ref={textAreaRef}
+                            style={{
+                                width: "100%",
+                                resize: "none",
+                                overflow: "hidden",
+                                display: "block",
+                            }}
+                            onChange={onDescriptionChange}
+                            value={fields.description}
+                        />
+                    </FormGroup>
+                    {/* <FormGroup label="Post description" labelInfo="(required)">
                         <InputGroup
                             required
                             value={fields.description}
@@ -123,7 +145,7 @@ export const CreatePost = () => {
                             // value={fields.email}
                             // onChange={handleChange("email")}
                         />
-                    </FormGroup>
+                    </FormGroup> */}
                     <input
                         onChange={onFileChange}
                         accept=".png,.jpeg,.jpg"
