@@ -16,15 +16,24 @@ export const ListPostItemRoot = styled.div(
     `
 );
 
-export const ListPostItemDescription = styled.p(
-    ({ theme }) => css`
+interface IPostDescription {
+    rows?: number;
+}
+
+export const ListPostItemDescription = styled.p<IPostDescription>(
+    ({ theme, rows }) => css`
         margin: 0;
         letter-spacing: 1px;
         display: -webkit-box;
         overflow: hidden;
         text-overflow: ellipsis;
-        -webkit-line-clamp: 3;
         -webkit-box-orient: vertical;
+
+        ${rows &&
+        css`
+            -webkit-line-clamp: ${rows};
+            -webkit-box-orient: vertical;
+        `}
     `
 );
 
