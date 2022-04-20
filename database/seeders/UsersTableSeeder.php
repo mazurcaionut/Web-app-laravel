@@ -25,6 +25,6 @@ class UsersTableSeeder extends Seeder
         $user->image = "https://www.industrialempathy.com/img/remote/ZiClJf-1920w.jpg";
         $user->save();
 
-        User::factory()->count(25)->create();
+        User::factory()->count(10)->create();
     }
 }

@@ -16,6 +16,18 @@ export const useSignUp = () => {
     const signUp = async (submissionData: IUserRegistration) => {
         setLoading(true);
 
+        const { password, password_confirmation } = submissionData;
+
+        if (password && password_confirmation) {
+            if (password !== password_confirmation) {
+                show({
+                    message: "Password doesn't match the confirm one",
+                    intent: "warning",
+                });
+                return;
+            }
+        }
+
         try {
             await axios({
                 method: "POST",

@@ -32,7 +32,7 @@ class PostController extends Controller
     {
         $responseMessage = "Posts data";
 
-        $postsWithRelations = Post::with("user")->orderBy("created_at", "DESC")->get();
+        $postsWithRelations = Post::with("user")->orderBy("updated_at", "DESC")->get();
 
         $data = $postsWithRelations;
     
@@ -60,28 +60,11 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        // // return response()->json([
-        // //     'success' => true,
-        // //     'message' => "Tester"
-        // //     ], 200);
-
         $request->validate([
             'image' => 'required',
+            'title' => 'required|string',
+            'description' => 'required|string',
           ]);
-
-        // $validator = Validator::make($request->all(),[
-        //     // "image" => "required",
-        //     'title' => 'required|string',
-        //     'description' => 'required|string',
-        // ]);
-
-        // if($validator->fails())
-        // {
-        //     return response()->json([
-        //         'success' => false,
-        //         'message' => $validator->messages()->toArray()
-        //         ], 500);
-        // }
 
         $image = $request->file('image');
 

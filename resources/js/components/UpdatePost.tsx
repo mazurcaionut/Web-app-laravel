@@ -152,7 +152,15 @@ export const UpdatePost = () => {
                         image={fields.localUrl ?? imageDefault}
                     />
 
-                    <Button onClick={onUpdatePost} icon="log-in">
+                    <Button
+                        disabled={
+                            fields.description === "" ||
+                            fields.title === "" ||
+                            fields.localUrl === ""
+                        }
+                        onClick={onUpdatePost}
+                        icon="log-in"
+                    >
                         Update post
                     </Button>
                 </div>

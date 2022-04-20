@@ -58,7 +58,8 @@ export const CommentItem = (props: CommentItemProps) => {
 
     const hasComments = comment.comments && comment.comments.length > 0;
     const postDate = comment
-        ? moment(comment.created_at).format("Do MMMM YYYY")
+        ? // ? moment(comment.updated_at).format("Do MMMM YYYY")
+          moment(comment.updated_at).fromNow()
         : "Not found";
 
     const showRepliesToggle = () => setShowReplies(!showReplies);
@@ -118,6 +119,7 @@ export const CommentItem = (props: CommentItemProps) => {
                             />
                         </FormGroup>
                         <Button
+                            disabled={currentCommentContent === ""}
                             onClick={updateComment(
                                 currentCommentContent,
                                 comment.id
@@ -241,6 +243,7 @@ export const CommentItem = (props: CommentItemProps) => {
                         />
                     </FormGroup>
                     <Button
+                        disabled={commentComment === ""}
                         onClick={addComment(
                             "App\\Models\\Comment",
                             comment.id,

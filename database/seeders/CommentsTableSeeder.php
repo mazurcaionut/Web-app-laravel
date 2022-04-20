@@ -19,7 +19,7 @@ class CommentsTableSeeder extends Seeder
      */
     public function run()
     {
-        $commentsPosts = Comment::factory()->count(100)->state(new Sequence(
+        $commentsPosts = Comment::factory()->count(50)->state(new Sequence(
             function ($sequence) {
                 $user = User::get()->random();
                 $post = Post::get()->random();
@@ -32,7 +32,7 @@ class CommentsTableSeeder extends Seeder
                 ];
             }
         ))->create();
-        $commentsComments = Comment::factory()->count(150)->state(new Sequence(
+        $commentsComments = Comment::factory()->count(50)->state(new Sequence(
             function ($sequence) {
                 $user = User::get()->random();
                 $comment = Comment::whereNotNull("post_id")->get()->random();

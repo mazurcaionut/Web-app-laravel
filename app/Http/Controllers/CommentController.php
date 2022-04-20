@@ -45,22 +45,12 @@ class CommentController extends Controller
     public function store(Request $request)
     {
         //
-
-
-
-        // $validator = Validator::make($request->all(),[
-        //     "commentable_type" => "required|string",
-        //     'commentable_id' => 'required|integer',
-        //     'content' => 'required|string',
-        // ]);
-
-        // if($validator->fails())
-        // {
-        //     return response()->json([
-        //         'success' => false,
-        //         'message' => $validator->messages()->toArray()
-        //         ], 500);
-        // }
+        $request->validate([
+            'content' => 'required|string',
+            'commentable_id' => 'required|integer',
+            "commentable_type" => "required|string",
+            "post_id" => "required|integer",
+          ]);
 
         $newComment = new Comment();
         $newComment->content = $request->content; 
@@ -101,7 +91,7 @@ class CommentController extends Controller
         return response()->json([
             "success" => true,
             "message" => $responseMessage,
-            // "data" => $newComment
+            "data" => $newComment
         ], 200);
     }
 
@@ -136,6 +126,10 @@ class CommentController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'content' => 'required|string',
+          ]);
+
         $updatedComment = Comment::findOrFail($id);
         $updatedComment->content = $request->content; 
 

@@ -91,7 +91,7 @@ export const Post = () => {
 
             fetchPost();
             console.log("\n\nData comment: ", data, "\n\n");
-            setCommentIndex(id);
+            // setCommentIndex(id);
         } catch ({ message }) {
             show({ message, intent: "error" });
         }
@@ -127,6 +127,7 @@ export const Post = () => {
                 setShowAddCommentForPost(false);
                 setPostComment("");
                 console.log("\n\nData comment: ", data, "\n\n");
+                setCommentIndex(data.data.id);
             } catch ({ message }) {
                 show({ message, intent: "error" });
             }
@@ -215,6 +216,7 @@ export const Post = () => {
                                     />
                                 </FormGroup>
                                 <Button
+                                    disabled={postComment === ""}
                                     onClick={addComment(
                                         "App\\Models\\Post",
                                         post.id,

@@ -20,7 +20,7 @@ class NotificationsTableSeeder extends Seeder
      */
     public function run()
     {
-        for ($index = 1; $index <= 250; $index++) {
+        for ($index = 1; $index <= 100; $index++) {
 
             $comment = Comment::where("id", $index)->first();
             $user = User::get()->random();
