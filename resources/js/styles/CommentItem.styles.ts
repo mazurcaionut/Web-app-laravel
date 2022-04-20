@@ -34,3 +34,28 @@ export const CommentItemRoot = styled.div<ICommentItemRoot>(
         }
     `
 );
+
+interface ICommentContent {
+    enableAnimation?: boolean;
+}
+
+export const CommentContent = styled.div<ICommentContent>(
+    ({ theme, enableAnimation }) => css`
+        ${enableAnimation &&
+        css`
+            animation: blink 2s linear 2;
+        `}
+
+        @keyframes blink {
+            0% {
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+            }
+        }
+    `
+);

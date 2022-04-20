@@ -3,6 +3,7 @@ import { Tooltip2 } from "@blueprintjs/popover2";
 import moment from "moment";
 import React from "react";
 import { useHistory } from "react-router-dom";
+import { useCurrentUser } from "../hooks/useCurrentUser";
 // import { IUser } from "../hooks/useCurrentUser";
 import { usePathname } from "../hooks/usePathname";
 import { Post } from "../hooks/useSinglePost";
@@ -21,6 +22,7 @@ interface IListPostItem {
 
 export const ListPostItem = (props: IListPostItem) => {
     const { post, deletePost } = props;
+    const { user } = useCurrentUser();
     const history = useHistory();
     const pathname = usePathname();
     // const postDate = moment(post.created_at).format("Do MMMM YYYY");
@@ -69,7 +71,7 @@ export const ListPostItem = (props: IListPostItem) => {
             </div>
             <div style={{ display: "flex", flexDirection: "row", gap: "15px" }}>
                 <PostImage image={post.image} />
-                {pathname.includes("myposts") ? (
+                {pathname.includes("myposts") || user?.role === "Admin" ? (
                     <>
                         <Tooltip2 content="Edit post" placement="top">
                             <Icon
