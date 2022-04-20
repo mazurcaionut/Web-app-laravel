@@ -101,8 +101,6 @@ class UserController extends Controller
         $responseMessage = "user profile";
         $user = Auth::guard("api")->user();
 
-        // $currentUserId = Auth::guard("api")->id();
-        // $data = User::with("notifications")->findOrFail($currentUserId);
         return response()->json([
         "success" => true,
         "message" => $responseMessage,
@@ -134,11 +132,6 @@ class UserController extends Controller
         ], 200);
     }
 
-    // public function currentUser()
-    // {
-    //     $user = auth("api")->user();
-    //     return $user;
-    // }
 
     /**
      * Display a listing of the resource.

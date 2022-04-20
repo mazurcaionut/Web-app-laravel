@@ -73,11 +73,6 @@ export const CreatePost = () => {
                 data.append("image", image[0]);
             }
 
-            // const data = {
-            //     title: title,
-            //     description: description,
-            // };
-
             const { data: outputData } = await axios({
                 method: "POST",
                 url: `http://localhost/api/${createPostURL}`,
@@ -137,15 +132,6 @@ export const CreatePost = () => {
                             value={fields.description}
                         />
                     </FormGroup>
-                    {/* <FormGroup label="Post description" labelInfo="(required)">
-                        <InputGroup
-                            required
-                            value={fields.description}
-                            onChange={onDescriptionChange}
-                            // value={fields.email}
-                            // onChange={handleChange("email")}
-                        />
-                    </FormGroup> */}
                     <input
                         onChange={onFileChange}
                         accept=".png,.jpeg,.jpg"
@@ -159,6 +145,11 @@ export const CreatePost = () => {
 
                     <Button
                         // loading={loading}
+                        disabled={
+                            fields.description === "" ||
+                            !fields.localUrl ||
+                            fields.title === ""
+                        }
                         onClick={onCreatePost}
                         icon="log-in"
                     >

@@ -14,12 +14,6 @@ class NotificationController extends Controller
         $responseMessage = "User notification data";
 
         $data = Auth::guard("api")->user()->notifications;
-    
-        // $currentUserId = Auth::guard("api")->id();
-        // $data = User::findOrFail($currentUserId)->notifications;
-        // $currentUserId = Auth::guard("api")->id();
-        // $data = User::with("notifications")->findOrFail($currentUserId);
-
 
         return response()->json([
             "success" => true,

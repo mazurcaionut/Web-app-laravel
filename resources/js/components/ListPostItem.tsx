@@ -26,7 +26,7 @@ export const ListPostItem = (props: IListPostItem) => {
     const history = useHistory();
     const pathname = usePathname();
     // const postDate = moment(post.created_at).format("Do MMMM YYYY");
-    const postDate = moment(post.created_at).fromNow();
+    const postDate = moment(post.updated_at).fromNow();
 
     // const user = {
     //     name: post.user.name,
