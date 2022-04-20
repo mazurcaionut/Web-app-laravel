@@ -40,6 +40,7 @@ class UserController extends Controller
         $data = [
             "name" => $request->name,
             "email" => $request->email,
+            "role" => "User",
             "password" => Hash::make($request->password)
         ];
 
@@ -107,6 +108,18 @@ class UserController extends Controller
         "message" => $responseMessage,
         "data" => $user
         ], 200);
+    }
+
+    public function getAll()
+    {
+        $responseMessage = "Fetched all users";
+        $users = User::all();
+
+        return response()->json([
+            "success" => true,
+            "message" => $responseMessage,
+            "data" => $users
+            ], 200);
     }
 
 

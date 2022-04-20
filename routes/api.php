@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Route;
 Route::group(['prefix' => 'users', 'middleware' => 'CORS'], function ($router) {
     Route::post('/register', [UserController::class, 'register'])->name('register.user');
     Route::post('/login', [UserController::class, 'login'])->name('login.user');
+    Route::get("/all", [UserController::class, 'getAll'])->name('getAll.user');
     Route::get('/view-profile', [UserController::class, 'viewProfile'])->name('profile.user');
     Route::post('/update/{id}', [UserController::class, 'update'])->name('update.user');
     Route::get("/notifications", [NotificationController:: class, "getAll"])->name("getAll.user");

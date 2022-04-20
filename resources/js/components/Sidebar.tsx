@@ -80,6 +80,17 @@ export const Sidebar = () => {
                         onClick={redirectTo("/dashboard/create")}
                     />
                 </Tooltip2>
+
+                {user?.role === "Admin" ? (
+                    <Tooltip2 content="Admin page" placement="right">
+                        <Icon
+                            style={{ cursor: "pointer" }}
+                            size={40}
+                            icon="inherited-group"
+                            onClick={redirectTo("/dashboard/adminPage")}
+                        />
+                    </Tooltip2>
+                ) : null}
             </MiddleIcons>
 
             <Tooltip2 content={user?.name} placement="right">

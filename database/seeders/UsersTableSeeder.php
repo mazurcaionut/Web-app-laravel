@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Post;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class UsersTableSeeder extends Seeder
 {
@@ -16,13 +17,14 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        // $user = new User();
-        // $user->name = "Jordan";
-        // $user->email = "Jordan's email";
-        // $user->password = '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi';
-        // $user->save();
+        $user = new User();
+        $user->name = "Mazi";
+        $user->email = "mazurcaionut99@gmail.com";
+        $user->password = Hash::make("123456");
+        $user->role = "Admin";
+        $user->image = "https://www.industrialempathy.com/img/remote/ZiClJf-1920w.jpg";
+        $user->save();
 
-
-        User::factory()->count(5)->create();
+        User::factory()->count(25)->create();
     }
 }

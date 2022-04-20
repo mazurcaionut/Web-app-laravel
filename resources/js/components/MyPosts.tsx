@@ -13,14 +13,14 @@ export const MyPosts = () => {
     const { user } = useCurrentUser();
     const [token] = useLocalStorage(AUTH_TOKEN);
     const show = useToast();
-    const deleteCommentURL = "posts/delete";
+    const deletePostURL = "posts/delete";
 
     const deletePost = (id: number) => async (e: any) => {
         e.stopPropagation();
         try {
             const { data } = await axios({
                 method: "DELETE",
-                url: `http://localhost/api/${deleteCommentURL}/${id}`,
+                url: `http://localhost/api/${deletePostURL}/${id}`,
                 headers: {
                     Authorization: "Bearer " + token,
                     "Content-Type": "application/json",

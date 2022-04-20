@@ -9,6 +9,7 @@ import { Post } from "./components/Post";
 import { MyPosts } from "./components/MyPosts";
 import { UpdatePost } from "./components/UpdatePost";
 import { Notifications } from "./components/Notifications";
+import { AdmingPage } from "./components/AdminPage";
 
 interface IRoutes {
     component: React.ComponentType<any>;
@@ -19,6 +20,10 @@ export const privateRoutes: IRoutes[] = [
     {
         component: CreatePost,
         path: "/dashboard/create",
+    },
+    {
+        component: AdmingPage,
+        path: "/dashboard/adminPage",
     },
     {
         component: MyPosts,

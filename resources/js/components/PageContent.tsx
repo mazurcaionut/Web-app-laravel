@@ -2,7 +2,7 @@ import { InputGroup, Spinner } from "@blueprintjs/core";
 import axios from "axios";
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { usePosts } from "../hooks/usePosts";
-import { Post } from "../hooks/useSinglePost";
+import { Post, User } from "../hooks/useSinglePost";
 import { PageContentRoot } from "../styles/PageContent.styles";
 import { ListPostItem } from "./ListPostItem";
 
@@ -10,11 +10,12 @@ interface IMainPage {
     posts: Post[];
     loading: boolean;
     title?: string;
+    user: User | null;
     deletePost?: (id: number) => (e: any) => Promise<void>;
 }
 
 export const MainPageContent = (props: IMainPage) => {
-    const { posts, loading, title, deletePost } = props;
+    const { posts, loading, title, deletePost, user } = props;
     const [searchValue, setSearchValue] = useState("");
 
     const onSearchValue = (event: ChangeEvent<HTMLInputElement>) =>
@@ -51,6 +52,7 @@ export const MainPageContent = (props: IMainPage) => {
                     )
                     .map((item, index) => (
                         <ListPostItem
+                            user={user}
                             deletePost={deletePost}
                             key={index + 1}
                             post={item}

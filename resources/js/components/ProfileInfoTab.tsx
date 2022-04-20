@@ -70,7 +70,7 @@ export const ProfileInfoTab = (props: ProfileInfoTabProps) => {
                     paddingRight: "20px",
                 }}
             >
-                <FormGroup label="Display name">
+                <FormGroup label={`Display name (${user?.role})`}>
                     <InputGroup
                         required
                         value={fields.name}

@@ -4,7 +4,7 @@ import moment from "moment";
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { usePathname } from "../hooks/usePathname";
 import { Comment, Post, User } from "../hooks/useSinglePost";
-import { CommentItemRoot } from "../styles/CommentItem.styles";
+import { CommentContent, CommentItemRoot } from "../styles/CommentItem.styles";
 import { Avatar } from "./Avatar";
 
 interface CommentItemProps {
@@ -72,7 +72,7 @@ export const CommentItem = (props: CommentItemProps) => {
     return (
         <CommentItemRoot
             margin={margin}
-            enableAnimation={commentIndex === comment.id}
+            // enableAnimation={commentIndex === comment.id}
             ref={scrollTo}
         >
             <div
@@ -127,10 +127,43 @@ export const CommentItem = (props: CommentItemProps) => {
                         </Button>
                     </div>
                 ) : (
-                    <div>{comment.content}</div>
+                    <CommentContent
+                        enableAnimation={commentIndex === comment.id}
+                    >
+                        {comment.content}
+                    </CommentContent>
                 )}
 
                 {comment.user?.id === currentUser?.id ||
+                currentUser?.role === "Admin" ? (
+                    <Tooltip2 content="Edit comment" placement="top">
+                        <Icon
+                            style={{ cursor: "pointer" }}
+                            size={20}
+                            icon="edit"
+                            onClick={() =>
+                                setShowUpdateCommentForComment(
+                                    !showUpdateCommentForComment
+                                )
+                            }
+                        />
+                    </Tooltip2>
+                ) : null}
+
+                {comment.user?.id === currentUser?.id ||
+                post.user?.id === currentUser?.id ||
+                currentUser?.role === "Admin" ? (
+                    <Tooltip2 content="Delete comment" placement="top">
+                        <Icon
+                            style={{ cursor: "pointer" }}
+                            size={20}
+                            icon="trash"
+                            onClick={deleteComment(comment.id)}
+                        />
+                    </Tooltip2>
+                ) : null}
+
+                {/* {comment.user?.id === currentUser?.id ||
                 post?.user?.id === currentUser?.id ? (
                     <>
                         {!(post?.user?.id === (currentUser?.id as number)) ? (
@@ -157,7 +190,7 @@ export const CommentItem = (props: CommentItemProps) => {
                             />
                         </Tooltip2>
                     </>
-                ) : null}
+                ) : null} */}
             </div>
 
             <div
