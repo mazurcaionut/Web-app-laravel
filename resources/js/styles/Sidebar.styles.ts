@@ -69,3 +69,29 @@ export const AvatarImg = styled.img<IUserAvatar>(
         height: ${size}px;
     `
 );
+
+export const TabRoot = styled.div(
+    ({ theme }) => css`
+        text-align: center;
+        align-self: center;
+
+        & .bp4-tab {
+            color: grey !important;
+            outline: none;
+        }
+
+        & .bp4-tab-list {
+            width: fit-content;
+        }
+
+        & .bp4-tab-indicator {
+            background-color: black !important;
+            /* color: black !important; */
+        }
+
+        & .bp4-tab[aria-selected="true"] {
+            color: black !important;
+            /* background-color: black !important; */
+        }
+    `
+);

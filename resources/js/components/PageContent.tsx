@@ -1,21 +1,61 @@
-import { Spinner } from "@blueprintjs/core";
+import { InputGroup, Spinner } from "@blueprintjs/core";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import { usePosts } from "../hooks/usePosts";
+import { Post } from "../hooks/useSinglePost";
 import { PageContentRoot } from "../styles/PageContent.styles";
 import { ListPostItem } from "./ListPostItem";
 
-export const MainPageContent = () => {
-    const { posts, loading } = usePosts();
+interface IMainPage {
+    posts: Post[];
+    loading: boolean;
+    title?: string;
+    deletePost?: (id: number) => (e: any) => Promise<void>;
+}
+
+export const MainPageContent = (props: IMainPage) => {
+    const { posts, loading, title, deletePost } = props;
+    const [searchValue, setSearchValue] = useState("");
+
+    const onSearchValue = (event: ChangeEvent<HTMLInputElement>) =>
+        setSearchValue(event.target.value);
 
     return (
         <PageContentRoot>
+            <div
+                style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                }}
+            >
+                {title ? <h1>{title}</h1> : null}
+                <InputGroup
+                    required
+                    type="search"
+                    leftIcon="search"
+                    value={searchValue}
+                    onChange={onSearchValue}
+                    // value={fields.email}
+                    // onChange={handleChange("email")}
+                />
+            </div>
             {loading ? (
                 <Spinner />
             ) : (
-                posts.map((item, index) => (
-                    <ListPostItem key={index + 1} post={item} />
-                ))
+                posts
+                    .filter((post) =>
+                        post.title
+                            .toLowerCase()
+                            .includes(searchValue.toLowerCase())
+                    )
+                    .map((item, index) => (
+                        <ListPostItem
+                            deletePost={deletePost}
+                            key={index + 1}
+                            post={item}
+                        />
+                    ))
             )}
         </PageContentRoot>
     );

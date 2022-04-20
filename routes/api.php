@@ -20,18 +20,28 @@ Route::group(['prefix' => 'users', 'middleware' => 'CORS'], function ($router) {
     Route::post('/register', [UserController::class, 'register'])->name('register.user');
     Route::post('/login', [UserController::class, 'login'])->name('login.user');
     Route::get('/view-profile', [UserController::class, 'viewProfile'])->name('profile.user');
+    Route::post('/update/{id}', [UserController::class, 'update'])->name('update.user');
+    Route::get("/notifications", [NotificationController:: class, "getAll"])->name("getAll.user");
     Route::get('/logout', [UserController::class, 'logout'])->name('logout.user');
 });
 
 
 Route::group(['prefix' => 'posts', 'middleware' => 'CORS'], function ($router) {
-    Route::get('/all', [PostController::class, 'apiIndex'])->name('apiIndex.posts');
+    Route::get('/all', [PostController::class, 'getAll'])->name('getAll.posts');
     Route::post('/create', [PostController::class, 'store'])->name('store.posts');
-    // Route::post('/register', [UserController::class, 'register'])->name('register.user');
-    // Route::post('/login', [UserController::class, 'login'])->name('login.user');
-    // Route::get('/view-profile', [UserController::class, 'viewProfile'])->name('profile.user');
-    // Route::get('/logout', [UserController::class, 'logout'])->name('logout.user');
+    Route::get("/{id}", [PostController::class, "getOne"])->name("getOne.posts");
+    Route::delete('/delete/{id}', [PostController::class, 'destroy'])->name('destroy.post');
+    Route::post('/update/{id}', [PostController::class, 'update'])->name('update.post');
 });
+
+Route::group(['prefix' => 'comments', 'middleware' => 'CORS'], function ($router) {
+    Route::post('/create', [CommentController::class, 'store'])->name('store.comment');
+    Route::post('/update/{id}', [CommentController::class, 'update'])->name('update.comment');
+    Route::delete('/delete/{id}', [CommentController::class, 'destroy'])->name('destroy.comment');
+    // Route::post('/create', [PostController::class, 'store'])->name('store.posts');
+    // Route::get("/{id}", [PostController::class, "getOne"])->name("getOne.posts");
+});
+
 
 
 // Route::middleware("auth:api")->group(function(){

@@ -15,12 +15,85 @@ import { User } from "./useSinglePost";
 //     imageURL: string | null;
 // }
 
+export interface UpdateUserArgs {
+    name?: string;
+    email?: string;
+    image?: FileList;
+    password?: string;
+    newPassword?: string;
+    passwordConfirm?: string;
+}
+
 export const useCurrentUser = () => {
     const [currentUser, setCurrentUser] = useState<User | null>(null);
     const [loading, setLoading] = useState(false);
     const show = useToast();
+    const updateUserURL = "users/update";
     const viewProfileURL = "users/view-profile";
     const [token] = useLocalStorage(AUTH_TOKEN);
+
+    const onUserUpdate = (fields: UpdateUserArgs) => async () => {
+        try {
+            const {
+                name,
+                email,
+                image,
+                password,
+                newPassword,
+                passwordConfirm,
+            } = fields;
+
+            const data = new FormData();
+
+            if (name) {
+                data.append("name", name);
+            }
+
+            if (email) {
+                data.append("email", email);
+            }
+
+            if (image) {
+                data.append("image", image[0]);
+            }
+
+            if (password && newPassword) {
+                if (newPassword !== passwordConfirm) {
+                    show({
+                        message: "New password doesn't match the confirm one",
+                        intent: "warning",
+                    });
+                    return;
+                }
+
+                data.append("password", password);
+                data.append("newPassword", newPassword);
+            }
+
+            const { data: outputData } = await axios({
+                method: "POST",
+                url: `http://localhost/api/${updateUserURL}/${currentUser?.id}`,
+                data: data,
+                headers: {
+                    Authorization: "Bearer " + token,
+                    "Content-Type": "multipart/form-data",
+                },
+                responseType: "json",
+            });
+
+            show({
+                message: "User updated successfully",
+                intent: "success",
+            });
+
+            fetchUser();
+            console.log("\n\nData: ", outputData, "\n\n");
+            // history.push("/dashboard");
+        } catch (error) {
+            console.error(error);
+            show({ message: error.message, intent: "error" });
+        }
+    };
 
     const fetchUser = async () => {
         setLoading(true);
@@ -45,8 +118,6 @@ export const useCurrentUser = () => {
         setLoading(false);
     };
 
-    const updateUserProfile = async () => {};
-
     useEffect(() => {
         fetchUser();
     }, []);
@@ -54,5 +125,6 @@ export const useCurrentUser = () => {
     return {
         user: currentUser,
         loading,
+        onUserUpdate,
     };
 };

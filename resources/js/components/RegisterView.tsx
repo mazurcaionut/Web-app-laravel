@@ -6,6 +6,7 @@ import {
     GuestPageRoot,
 } from "../styles/LoginView.styles";
 import { useSignUp } from "../hooks/useSignUp";
+import { LockIcon, UnlockIcon } from "../styles/ProfileView.styles";
 
 export interface IUserRegistration {
     name: string;
@@ -16,6 +17,8 @@ export interface IUserRegistration {
 
 export const RegisterView = () => {
     const { signUp, loading } = useSignUp();
+    const [showPassword, setShowPassword] = useState<string>("none");
+
     const [disableSubmit, setDisableSubmit] = useState(true);
     const [fields, setFields] = useState<IUserRegistration>({
         name: "",
@@ -23,6 +26,19 @@ export const RegisterView = () => {
         password: "",
         password_confirmation: "",
     });
+
+    const onEyeClick = (field: string) => () =>
+        showPassword === field
+            ? setShowPassword("none")
+            : setShowPassword(field);
+
+    const lockButton = (field: string) => (
+        <LockIcon size={20} onClick={onEyeClick(field)} />
+    );
+
+    const unlockButton = (field: string) => (
+        <UnlockIcon size={20} onClick={onEyeClick(field)} />
+    );
 
     const handleChange =
         (field: string) => (event: React.ChangeEvent<HTMLInputElement>) =>
@@ -80,16 +96,32 @@ export const RegisterView = () => {
                     <InputGroup
                         value={fields.password}
                         onChange={handleChange("password")}
-                        type="password"
-                        required
+                        // type="password"
+                        // required
+                        type={showPassword === "password" ? "text" : "password"}
+                        rightElement={
+                            showPassword !== "password"
+                                ? unlockButton("password")
+                                : lockButton("password")
+                        }
                     />
                 </FormGroup>
                 <FormGroup label="Password confirmation" labelInfo="(required)">
                     <InputGroup
                         value={fields.password_confirmation}
                         onChange={handleChange("password_confirmation")}
-                        type="password"
-                        required
+                        // type="password"
+                        // required
+                        type={
+                            showPassword === "password_confirmation"
+                                ? "text"
+                                : "password"
+                        }
+                        rightElement={
+                            showPassword !== "password_confirmation"
+                                ? unlockButton("password_confirmation")
+                                : lockButton("password_confirmation")
+                        }
                     />
                 </FormGroup>
                 <div>
