@@ -28,7 +28,7 @@ import { ProfileView } from "./ProfileView";
 
 export const Sidebar = () => {
     const history = useHistory();
-    const { user, loading } = useCurrentUser();
+    const { user, loading, onUserUpdate } = useCurrentUser();
     const [dialogOpen, setDialogOpen] = useState(false);
     const { loading: logOutLoading, logOut } = useLogout();
 
@@ -94,6 +94,7 @@ export const Sidebar = () => {
                 />
             </Tooltip2>
             <ProfileView
+                onUserUpdate={onUserUpdate}
                 closeDialog={closeProfileSettings}
                 user={user}
                 dialogOpen={dialogOpen}

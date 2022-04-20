@@ -8,6 +8,8 @@ use Validator;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
+
 
 class UserController extends Controller
 {
@@ -188,6 +190,92 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $updatedUser = User::findOrFail($id);
+
+
+        if($request->has("password")) {
+            $credentials = [
+                "email" => $updatedUser->email,
+                "password" => $request->password,
+            ];
+
+            // $credentials = $request->only(["email","password"]);
+
+            if(!Hash::check($request->password, $updatedUser->password))
+            {
+                $responseMessage = "Invalid password";
+                return response()->json([
+                "success" => false,
+                "message" => $responseMessage,
+                "error" => $responseMessage
+                ], 422);
+            }
+
+            $updatedUser->password = Hash::make($request->newPassword);
+        }
+
+        if($request->has("name")) {
+            $updatedUser->name = $request->name; 
+        }
+
+        if($request->has("email")) {
+            $updatedUser->email = $request->email; 
+        }
+
+        if($request->has("image")) {
+            $image = $request->file('image');
+
+            $firebase_storage_path = "Images/";
+            $localFolder = public_path("firebase-temp-uploads")."/";
+            $extension = $image->getClientOriginalExtension();
+            $fileName = $updatedUser->name; 
+            $randomUniqueString = Str::random(15);
+            $file = $randomUniqueString . $fileName . "." . $extension;
+    
+    
+            if($image->move($localFolder, $file)) {
+                $uploadedFile = fopen($localFolder.$file, "r");
+        
+                app("firebase.storage")->getBucket()->upload($uploadedFile, ["name" => $firebase_storage_path. $file]);
+    
+                unlink($localFolder.$file);
+    
+                $imageReference = app("firebase.storage")->getBucket()->object($firebase_storage_path. $file);
+    
+    
+                if ($imageReference->exists()) {
+                    $now = new \DateTime();
+                    $expiresAt = $now->add(new \DateInterval("P1Y"));
+                    $image = $imageReference->signedUrl($expiresAt);
+    
+                    $updatedUser->image = $image; 
+    
+    
+                  } else {
+                    return response()->json([
+                        'success' => false,
+                        'message' => "File didn't upload properly"
+                        ], 500);    
+                }
+    
+            } else {
+                return response()->json([
+                    'success' => false,
+                    'message' => "Something wrong with file copy"
+                    ], 500);
+            }
+        }
+
+
+        $updatedUser->save();
+
+        $responseMessage = "User updated successfully";
+
+        return response()->json([
+            "success" => true,
+            "message" => $responseMessage,
+            "data" => $updatedUser,
+        ], 200);
     }
 
     /**
