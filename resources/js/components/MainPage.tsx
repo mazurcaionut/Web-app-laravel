@@ -1,6 +1,7 @@
 import axios from "axios";
 import React from "react";
 import { useHistory } from "react-router-dom";
+import { useCurrentUser } from "../hooks/useCurrentUser";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { usePosts } from "../hooks/usePosts";
 import { useToast } from "../hooks/useToast";
@@ -11,6 +12,7 @@ import { Sidebar } from "./Sidebar";
 
 export const MainPage = () => {
     const { posts, loading, fetchPosts } = usePosts();
+    const { user } = useCurrentUser();
     const show = useToast();
     const [token] = useLocalStorage(AUTH_TOKEN);
     const deletePostURL = "posts/delete";
@@ -43,6 +45,7 @@ export const MainPage = () => {
         <>
             <Sidebar />
             <MainPageContent
+                user={user}
                 posts={posts}
                 loading={loading}
                 title="Dashboard"

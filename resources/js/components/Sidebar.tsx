@@ -87,7 +87,7 @@ export const Sidebar = () => {
                             style={{ cursor: "pointer" }}
                             size={40}
                             icon="inherited-group"
-                            onClick={redirectTo("/dashboard/create")}
+                            onClick={redirectTo("/dashboard/adminPage")}
                         />
                     </Tooltip2>
                 ) : null}

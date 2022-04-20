@@ -6,7 +6,7 @@ import { useHistory } from "react-router-dom";
 import { useCurrentUser } from "../hooks/useCurrentUser";
 // import { IUser } from "../hooks/useCurrentUser";
 import { usePathname } from "../hooks/usePathname";
-import { Post } from "../hooks/useSinglePost";
+import { Post, User } from "../hooks/useSinglePost";
 import {
     ListPostItemDescription,
     ListPostItemRoot,
@@ -17,12 +17,12 @@ import { Avatar } from "./Avatar";
 
 interface IListPostItem {
     post: Post;
+    user: User | null;
     deletePost?: (id: number) => (e: any) => Promise<void>;
 }
 
 export const ListPostItem = (props: IListPostItem) => {
-    const { post, deletePost } = props;
-    const { user } = useCurrentUser();
+    const { post, deletePost, user } = props;
     const history = useHistory();
     const pathname = usePathname();
     // const postDate = moment(post.created_at).format("Do MMMM YYYY");

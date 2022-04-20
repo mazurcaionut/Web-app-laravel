@@ -110,7 +110,7 @@ export const useCurrentUser = () => {
             });
 
             setCurrentUser(data.data);
-            console.log("User: ", data.data);
+            // console.log("User: ", data.data);
         } catch ({ message }) {
             show({ message, intent: "error" });
         }

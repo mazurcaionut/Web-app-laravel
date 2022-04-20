@@ -110,6 +110,18 @@ class UserController extends Controller
         ], 200);
     }
 
+    public function getAll()
+    {
+        $responseMessage = "Fetched all users";
+        $users = User::all();
+
+        return response()->json([
+            "success" => true,
+            "message" => $responseMessage,
+            "data" => $users
+            ], 200);
+    }
+
 
     public function logout()
     {
