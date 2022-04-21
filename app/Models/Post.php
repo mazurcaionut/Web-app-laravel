@@ -11,6 +11,7 @@ class Post extends Model
 {
     use HasFactory;
 
+    public $withCount = ["allComments"];
 
     public function user() {
         return $this->belongsTo(User::class);

@@ -37,10 +37,12 @@ class UserController extends Controller
                 ], 500);
         }
 
+        $initialRole = "User";
+
         $data = [
             "name" => $request->name,
             "email" => $request->email,
-            "role" => "User",
+            "role" => $initialRole,
             "password" => Hash::make($request->password)
         ];
 

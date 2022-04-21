@@ -179,7 +179,7 @@ export const Post = () => {
                         <ListPostItemDescription>
                             {post.description}
                         </ListPostItemDescription>
-                        <ListPostItemTitle>{`Responses (${localPostComments.length})`}</ListPostItemTitle>
+                        <ListPostItemTitle>{`Responses (${post.all_comments_count})`}</ListPostItemTitle>
                         <Button
                             style={{ width: "300px" }}
                             onClick={() => {
@@ -189,7 +189,7 @@ export const Post = () => {
                                 );
                             }}
                         >
-                            Toggle Add Comment for Post
+                            Reply to the post
                         </Button>
                         {showAddCommentForPost ? (
                             <div
