@@ -1,25 +1,13 @@
-import {
-    Button,
-    Dialog,
-    FileInput,
-    FormGroup,
-    Icon,
-    InputGroup,
-    Tab,
-    Tabs,
-} from "@blueprintjs/core";
+import { Icon, Tab, Tabs } from "@blueprintjs/core";
 import React, { useEffect, useState } from "react";
 import { UpdateUserArgs } from "../hooks/useCurrentUser";
 import { User } from "../hooks/useSinglePost";
 import {
     DialogContent,
-    DialogFooter,
     DialogHeader,
     DialogRoot,
-    SaveChangesButton,
 } from "../styles/ProfileView.styles";
 import { TabRoot } from "../styles/Sidebar.styles";
-import { Avatar } from "./Avatar";
 import { PasswordTab } from "./PasswordTab";
 import { ProfileInfoTab } from "./ProfileInfoTab";
 

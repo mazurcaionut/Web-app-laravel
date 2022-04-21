@@ -1,29 +1,16 @@
 import React, { useState } from "react";
 import {
-    AvatarImg,
     LogoContainer,
     LogoutButton,
     MiddleIcons,
     SidebarRoot,
-    TabRoot,
-    UserAvatar,
 } from "../styles/Sidebar.styles";
-import {
-    Button,
-    FileInput,
-    FormGroup,
-    Icon,
-    InputGroup,
-    Spinner,
-    Tab,
-    Tabs,
-} from "@blueprintjs/core";
+import { Icon } from "@blueprintjs/core";
 import { useHistory } from "react-router-dom";
-import { Dialog } from "@blueprintjs/core";
 import { useLogout } from "../hooks/useLogout";
 import { useCurrentUser } from "../hooks/useCurrentUser";
 import { Avatar } from "./Avatar";
-import { Popover2, Tooltip2 } from "@blueprintjs/popover2";
+import { Tooltip2 } from "@blueprintjs/popover2";
 import { ProfileView } from "./ProfileView";
 
 export const Sidebar = () => {

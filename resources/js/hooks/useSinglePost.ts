@@ -62,6 +62,7 @@ export interface Post {
     updated_at: string;
     comments?: Comment[];
     user?: User;
+    all_comments_count?: number;
 }
 
 export const useSinglePost = () => {

@@ -14,12 +14,12 @@ export const useSignUp = () => {
     const [loading, setLoading] = useState<boolean>(false);
 
     const signUp = async (submissionData: IUserRegistration) => {
-        setLoading(true);
+        // const { password, password_confirmation } = submissionData;
 
-        const { password, password_confirmation } = submissionData;
-
-        if (password && password_confirmation) {
-            if (password !== password_confirmation) {
+        if (submissionData.password && submissionData.password_confirmation) {
+            if (
+                submissionData.password !== submissionData.password_confirmation
+            ) {
                 show({
                     message: "Password doesn't match the confirm one",
                     intent: "warning",
@@ -27,6 +27,10 @@ export const useSignUp = () => {
                 return;
             }
         }
+
+        setLoading(true);
+
+        console.log("Submission data:", submissionData);
 
         try {
             await axios({
